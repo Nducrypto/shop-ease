@@ -52,23 +52,22 @@ export const useUserState = () => {
     isFirstVisit,
   } = user;
 
-  console.log('isFirstVisit: ', isFirstVisit);
-  // useEffect(() => {
-  //   const loadCartStateFromStorage = async () => {
-  //     try {
-  //       const storedCartState = await AsyncStorage.getItem('getStarted');
+  useEffect(() => {
+    const loadCartStateFromStorage = async () => {
+      try {
+        const hasVisited = await AsyncStorage.getItem('getStarted');
 
-  //       if (storedCartState !== null) {
-  //         const parsedCartState = JSON.parse(storedCartState);
-  //         setUser((prev: AllUserState) => ({...prev, isFirstVisit: false}));
-  //       }
-  //     } catch (error) {
-  //       console.error('Error loading first visit from AsyncStorage:', error);
-  //     }
-  //   };
+        if (hasVisited !== null) {
+          // const parsedCartState = JSON.parse(storedCartState);
+          setUser((prev: AllUserState) => ({...prev, isFirstVisit: false}));
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
 
-  //   loadCartStateFromStorage();
-  // }, []);
+    loadCartStateFromStorage();
+  }, []);
   return {
     currentUser,
     isUserLoading,

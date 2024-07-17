@@ -1,7 +1,7 @@
-import { atom, useRecoilState } from "recoil";
+import {atom, useRecoilState} from 'recoil';
 
 export interface ProductInterface {
-  model: string;
+  title: string;
   brand: string;
   productId: string;
   price: number;
@@ -20,20 +20,20 @@ export interface AllProductState {
 }
 
 export const productState = atom<AllProductState>({
-  key: "productKey",
+  key: 'productKey',
   default: {
     allProducts: {},
     isProductLoading: false,
     isProductError: false,
-    currentId: "",
+    currentId: '',
   },
 });
 
 export const useProductState = () => {
   const [product, setProduct] = useRecoilState(productState);
-  const { isProductLoading, isProductError, currentId } = product;
+  const {isProductLoading, isProductError, currentId} = product;
   const allProducts = Object.values(product.allProducts);
-  const unique = new Set(["All"]);
+  const unique = new Set(['All']);
   for (const item of allProducts) {
     if (!unique.has(item.brand)) {
       unique.add(item.brand);
@@ -51,6 +51,6 @@ export const useProductState = () => {
 };
 
 export const updateCurrentId = (setProduct: any, productId: string) => {
-  setProduct((prev: AllProductState) => ({ ...prev, currentId: productId }));
+  setProduct((prev: AllProductState) => ({...prev, currentId: productId}));
   return true;
 };

@@ -1,11 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  StatusBar,
-  Appearance,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, ActivityIndicator, StatusBar} from 'react-native';
 import {signInWithEmailAndPassword, auth} from '../config/firebase';
 import {styles} from './loginStyles';
 import {useNavigation} from '@react-navigation/native';
@@ -13,8 +7,6 @@ import {useUserState} from '../recoilState/userState';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AuthInput from '../AuthInput/AuthInput';
 import CustomButton from '../CustomButton/CustomButton';
-import {useColorScheme} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const LogIn = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -53,23 +45,10 @@ const LogIn = () => {
   if (currentUser?.email && !isUserLoading) {
     navigation.navigate('Home Screen');
   }
-  const isDarkMode = useColorScheme() === 'dark';
-  console.log('useColorScheme: ', useColorScheme());
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  const colorScheme = Appearance.getColorScheme();
-  console.log('Current color scheme: ', colorScheme);
-  // useEffect(() => {
-  //   StatusBar.setBarStyle('dark-content');
-  //   StatusBar.setBackgroundColor('white');
-  // }, []);
   return (
     <View style={styles.signupContainer}>
       <StatusBar barStyle="light-content" backgroundColor="black" />
-
       <View style={styles.iconsCon}>
         <Entypo name="facebook-with-circle" color="#3B5998" size={50} />
         <Entypo name="twitter-with-circle" color="#5BC0DE" size={50} />

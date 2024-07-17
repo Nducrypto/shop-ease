@@ -18,9 +18,8 @@ interface Props {
   style?: any;
   priceColor?: any;
   imageStyle?: any;
-  key: number;
 }
-const Products = ({product, horizontal, full, key, style}: Props) => {
+const Products = ({product, horizontal, full, style}: Props) => {
   const navigation = useNavigation<any>();
 
   const proceedToProductDetail = () => {
@@ -39,7 +38,7 @@ const Products = ({product, horizontal, full, key, style}: Props) => {
   ];
 
   return (
-    <View style={styles.container} key={key}>
+    <View style={styles.container}>
       <Card minHeight={120} maxWidth={width} paddingLeft={0}>
         <View
           style={[
@@ -67,7 +66,7 @@ const Products = ({product, horizontal, full, key, style}: Props) => {
                   }),
                 }}
                 numberOfLines={2}>
-                {product?.model}
+                {product?.title}
               </Text>
               <Text
                 style={{
@@ -138,7 +137,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 0.1,
     // elevation: 2,
-
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
   },
 });

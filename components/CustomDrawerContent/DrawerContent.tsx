@@ -12,6 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useAuthentication} from '../actions/usersAction';
 import {useUserState} from '../recoilState/userState';
 import {auth, signOut} from '../config/firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Feather.loadFont();
 EvilIcons.loadFont();
@@ -20,7 +21,7 @@ const DrawerContent = (props: any) => {
   // useAuthentication();
   const [selectedScreen, setSelectedScreen] = useState<string>('Home');
   const navigation = useNavigation<any>();
-  const {currentUser} = useUserState();
+  const {currentUser, setUser} = useUserState();
 
   function handleNavigation(screenName: string) {
     navigation.navigate(screenName);
@@ -29,7 +30,9 @@ const DrawerContent = (props: any) => {
   async function handleSignOut() {
     try {
       await signOut(auth);
-      navigation.navigate('Sign In');
+      await AsyncStorage.removeItem('getStarted');
+      await setUser((prev: any) => ({...prev, isFirstVisit: true}));
+      navigation.navigate('Home Screen');
     } catch (error) {
       console.log(error);
     }

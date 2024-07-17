@@ -4,14 +4,25 @@ import {useNavigation} from '@react-navigation/native';
 import CustomButton from '../CustomButton/CustomButton';
 import {height} from '../actions/utils';
 import globalStyle from '../../constants/globalStyle';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useUserState} from '../recoilState/userState';
 
 const GetStarted = () => {
   const navigation = useNavigation<any>();
-  const handleNavigation = () => navigation.navigate('Home Screen');
-  // useEffect(() => {
-  //   StatusBar.setBarStyle('light-content');
-  //   StatusBar.setBackgroundColor('white');
-  // }, []);
+  const {isFirstVisit, setUser} = useUserState();
+  console.log('isFirstVisit: ', isFirstVisit);
+
+  const handleGetStarted = async () => {
+    try {
+      setUser(prev => ({...prev, isFirstVisit: false}));
+      AsyncStorage.setItem(
+        'getStarted',
+        JSON.stringify('This user has visied'),
+      );
+    } catch (error) {}
+    throw new Error('failed to update get Started');
+  };
+
   return (
     <ImageBackground
       source={require('../../assets/man-shop.png')}
@@ -28,7 +39,7 @@ const GetStarted = () => {
           <CustomButton
             title="GET STARTED"
             width={350}
-            onPress={() => handleNavigation()}
+            onPress={() => handleGetStarted()}
             testID="get-started-button"
           />
         </View>

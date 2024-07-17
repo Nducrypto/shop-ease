@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 
-import { addProduct, updateProduct } from "../../actions/productActions";
+import {addProduct, updateProduct} from '../../actions/productActions';
 import {
   View,
   Text,
@@ -9,17 +9,17 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
-} from "react-native";
-import Products from "../../ProductsList/Products";
+} from 'react-native';
+import Products from '../../ProductsList/Products';
 import {
   ProductInterface,
   updateCurrentId,
   useProductState,
-} from "../../recoilState/productState";
-import { useSnackBarState } from "../../recoilState/snacbarState";
+} from '../../recoilState/productState';
+import {useSnackBarState} from '../../recoilState/snacbarState';
 
 interface NewProduct {
-  model: string;
+  title: string;
   productDetail: string;
   brand: string;
   discountedPrice: number | string;
@@ -29,34 +29,34 @@ interface NewProduct {
   category: string;
 }
 const initialState: NewProduct = {
-  model: "",
-  productDetail: "",
-  brand: "",
-  discountedPrice: "",
-  price: "",
+  title: '',
+  productDetail: '',
+  brand: '',
+  discountedPrice: '',
+  price: '',
   likes: [],
   image: [],
-  category: "",
+  category: '',
 };
 
 const AddProduct = () => {
   const [productForm, setProductForm] = useState<NewProduct | ProductInterface>(
-    initialState
+    initialState,
   );
-  const { allProducts, currentId, setProduct } = useProductState();
-  const { setSnackBar } = useSnackBarState();
+  const {allProducts, currentId, setProduct} = useProductState();
+  const {setSnackBar} = useSnackBarState();
   const productToUpdate = allProducts.find(
-    (item) => item.productId === currentId
+    item => item.productId === currentId,
   );
 
   function handleNewProductChange(name: string, value: string) {
-    if (name === "image") {
-      setProductForm((prevProduct) => ({
+    if (name === 'image') {
+      setProductForm(prevProduct => ({
         ...prevProduct,
-        [name]: value.split(",").map((item: string) => item.trim()),
+        [name]: value.split(',').map((item: string) => item.trim()),
       }));
     } else {
-      setProductForm((prevProduct) => ({
+      setProductForm(prevProduct => ({
         ...prevProduct,
         [name]: value,
       }));
@@ -81,93 +81,90 @@ const AddProduct = () => {
       updateProduct(currentId, data, setProduct, setSnackBar);
     }
     setProductForm(initialState);
-    updateCurrentId(setProduct, "");
+    updateCurrentId(setProduct, '');
   }
 
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss();
-      }}
-    >
+      }}>
       <ScrollView>
-        <ScrollView horizontal style={{ margin: 20, gap: 50 }}>
-          {allProducts.map((product) => (
-            <View key={product.productId} style={{ marginTop: 16 }}>
+        <ScrollView horizontal style={{margin: 20, gap: 50}}>
+          {allProducts.map(product => (
+            <View key={product.productId} style={{marginTop: 16}}>
               <Products product={product} />
             </View>
           ))}
         </ScrollView>
-        <Text style={{ textAlign: "center" }}>
+        <Text style={{textAlign: 'center'}}>
           You have {allProducts.length} products in Stock
         </Text>
-        <View style={{ margin: 20 }}>
+        <View style={{margin: 20}}>
           <Text>Add New Product</Text>
           <Text>Model:</Text>
           <TextInput
             style={{
               borderWidth: 1,
-              borderColor: "#ccc",
+              borderColor: '#ccc',
               borderRadius: 5,
               padding: 10,
               marginBottom: 10,
             }}
-            value={productForm.model}
-            onChangeText={(text) => handleNewProductChange("model", text)}
+            value={productForm.title}
+            onChangeText={text => handleNewProductChange('model', text)}
           />
           <Text>Brand:</Text>
           <TextInput
             style={{
               borderWidth: 1,
-              borderColor: "#ccc",
+              borderColor: '#ccc',
               borderRadius: 5,
               padding: 10,
               marginBottom: 10,
             }}
             value={productForm.brand}
-            onChangeText={(text) => handleNewProductChange("brand", text)}
+            onChangeText={text => handleNewProductChange('brand', text)}
           />
           <Text>Product Detail:</Text>
           <TextInput
             style={{
               borderWidth: 1,
-              borderColor: "#ccc",
+              borderColor: '#ccc',
               borderRadius: 5,
               padding: 10,
               marginBottom: 10,
               height: 100,
             }}
             value={productForm.productDetail}
-            onChangeText={(text) =>
-              handleNewProductChange("productDetail", text)
-            }
+            onChangeText={text => handleNewProductChange('productDetail', text)}
             multiline
           />
           <Text>Price:</Text>
           <TextInput
             style={{
               borderWidth: 1,
-              borderColor: "#ccc",
+              borderColor: '#ccc',
               borderRadius: 5,
               padding: 10,
               marginBottom: 10,
             }}
             value={productForm.price.toString()}
-            onChangeText={(value) => handleNewProductChange("price", value)}
+            onChangeText={value => handleNewProductChange('price', value)}
             keyboardType="numeric"
           />
           <Text>Discounted Price:</Text>
           <TextInput
             style={{
               borderWidth: 1,
-              borderColor: "#ccc",
+              borderColor: '#ccc',
               borderRadius: 5,
               padding: 10,
               marginBottom: 10,
             }}
             value={productForm.discountedPrice?.toString()}
-            onChangeText={(value) =>
-              handleNewProductChange("discountedPrice", value)
+            onChangeText={value =>
+              handleNewProductChange('discountedPrice', value)
             }
             keyboardType="numeric"
           />
@@ -175,13 +172,13 @@ const AddProduct = () => {
           <TextInput
             style={{
               borderWidth: 1,
-              borderColor: "#ccc",
+              borderColor: '#ccc',
               borderRadius: 5,
               padding: 10,
               marginBottom: 10,
             }}
-            value={productForm.image.join(", ")}
-            onChangeText={(text) => handleNewProductChange("image", text)}
+            value={productForm.image.join(', ')}
+            onChangeText={text => handleNewProductChange('image', text)}
           />
           <Button title="Add Product" onPress={createProductHandler} />
         </View>
