@@ -48,13 +48,6 @@ const storageBucket = STORAGE_BUCKET;
 const messagingSenderId = MESSAGING_SENDER;
 const appId = APP_ID;
 const measurementId = MEASUREMENT_ID;
-// const apiKey = 'AIzaSyC2PLUxh8oduLQHY0CAzFDSpE5DcXlXYw0';
-// const authDomain = 'ecomfirebase-edcfb.firebaseapp.com';
-// const projectId = 'ecomfirebase-edcfb';
-// const storageBucket = 'ecomfirebase-edcfb.appspot.com';
-// const messagingSenderId = '396654152138';
-// const appId = '1:396654152138:web:ae413d5f7ad5e2b7392733';
-// const measurementId = 'G-LXGTQMKJ10';
 
 const app = initializeApp({
   apiKey,
